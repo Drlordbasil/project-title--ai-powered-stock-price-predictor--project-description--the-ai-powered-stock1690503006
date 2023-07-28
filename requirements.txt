@@ -1,0 +1,15 @@
+The required package requirements for this Python program are as follows:
+
+- pandas
+- numpy
+- requests
+- bs4 (BeautifulSoup)
+- sklearn
+- tensorflow
+- matplotlib
+
+You can install these packages by running the following command in your terminal or command prompt:
+
+```
+pip install pandas numpy requests beautifulsoup4 scikit-learn tensorflow matplotlib
+```
