@@ -1,3 +1,5 @@
+# Optimized Python Script
+
 import pandas as pd
 import numpy as np
 import requests
@@ -14,7 +16,7 @@ import matplotlib.pyplot as plt
 
 def collect_stock_data(stock_symbol):
     base_url = 'https://finance.yahoo.com/quote/'
-    url = base_url + stock_symbol + '/history?p=' + stock_symbol
+    url = f'{base_url}{stock_symbol}/history?p={stock_symbol}'
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
 
@@ -31,9 +33,6 @@ def collect_stock_data(stock_symbol):
         dates.append(date)
         prices.append(price)
 
-    # Collect financial statements, news sentiment, etc.
-    # ...
-
     return pd.DataFrame({'Date': dates, 'Price': prices})
 
 
@@ -42,9 +41,9 @@ def preprocess_data(data):
     data = data.dropna()
 
     # Normalize numeric features
-    scaler = MinMaxScaler()
     numeric_cols = ['Price']  # Add other numeric feature names
-    data[numeric_cols] = scaler.fit_transform(data[numeric_cols])
+    scaler = MinMaxScaler().fit_transform(data[numeric_cols])
+    data[numeric_cols] = scaler
 
     # Encode categorical variables
     # ...
@@ -67,8 +66,7 @@ def train_model(features, targets):
         features, targets, test_size=0.2, random_state=42)
 
     # Train random forest regressor
-    rf_reg = RandomForestRegressor()
-    rf_reg.fit(X_train, y_train)
+    rf_reg = RandomForestRegressor().fit(X_train, y_train)
 
     # Evaluate model performance
     scores = cross_val_score(rf_reg, X_test, y_test,
